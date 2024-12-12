@@ -94,7 +94,7 @@ namespace TogetherCulture1
             {
                 MessageBox.Show("Please Enter Your User Credentials", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            using(SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\PC\Documents\logindata.mdf;Integrated Security=True;Connect Timeout=30"))
+            using(SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Lenovo\Documents\LoginData.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False"))
             
            {
                
@@ -102,7 +102,7 @@ namespace TogetherCulture1
                     {
                         connect.Open();
 
-                        String selectDate = "SELECT * FROM admin WHERE email = @Email AND passwrd = @pass";
+                        String selectDate = "SELECT * FROM users WHERE email = @Email AND passwrd = @pass";
                     using (SqlCommand cmd = new SqlCommand(selectDate, connect))
                         {
 

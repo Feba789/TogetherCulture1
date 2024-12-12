@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TogetherCultureApp;
 
 namespace TogetherCulture1
 {
@@ -19,9 +20,10 @@ namespace TogetherCulture1
 
         private void GotoHome_memb1Page_Click(object sender, EventArgs e)
         {
-            HomepageForm hpform = new HomepageForm();
-            hpform.Show();
-            this.Close();
+            
+           Form1 fform = new Form1();
+            fform.Show();
+            this.Hide();
         }
 
         private void gotomemb_memb1Page_Click(object sender, EventArgs e)
@@ -124,6 +126,11 @@ namespace TogetherCulture1
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
             lastpoint = new Point(e.X, e.Y);
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -78,5 +78,10 @@ namespace TogetherCulture1
         {
             this.Close();
         }
+
+        private void EventBookingPage_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

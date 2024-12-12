@@ -180,5 +180,22 @@ namespace TogetherCulture1
         {
             lastpoint = new Point(e.X, e.Y);
         }
+
+        private void logoutMembPageButton_Click_1(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Do you want to Logout?", "Logout Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+
+                LoginForm lForm = new LoginForm();
+                lForm.Show();
+                this.Hide(); // Hide the current form
+            }
+            else
+            {
+
+            }
+        }
     }
 }

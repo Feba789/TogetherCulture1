@@ -1,4 +1,4 @@
-﻿CREATE TABLE admin
+﻿CREATE TABLE users
 (
 id INT PRIMARY KEY IDENTITY(1,1),
 email VARCHAR(MAX) NULL,
@@ -7,7 +7,7 @@ profile_created DATE NULL
 
 )
 
-SELECT * FROM admin
+SELECT * FROM users
 
 CREATE TABLE members
 

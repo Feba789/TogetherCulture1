@@ -122,6 +122,28 @@ namespace TogetherCultureApp
             mform.Show();
             this.Hide();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Do you want to Logout?", "Logout Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+
+                LoginForm lForm = new LoginForm();
+                lForm.Show();
+                this.Hide(); // Hide the current form
+            }
+            else
+            {
+
+            }
+        }
     }
 
     

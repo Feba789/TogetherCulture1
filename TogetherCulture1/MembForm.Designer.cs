@@ -133,6 +133,7 @@
             this.logoutMembPageButton.TabIndex = 12;
             this.logoutMembPageButton.Text = "Logout";
             this.logoutMembPageButton.UseVisualStyleBackColor = false;
+            this.logoutMembPageButton.Click += new System.EventHandler(this.logoutMembPageButton_Click_1);
             // 
             // flowLayoutPanel1
             // 

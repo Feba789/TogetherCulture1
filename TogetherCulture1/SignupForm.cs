@@ -101,14 +101,14 @@ namespace TogetherCulture1
                 return;
             }
 
-            using (SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\PC\Documents\logindata.mdf;Integrated Security=True;Connect Timeout=30"))
+            using (SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Lenovo\Documents\LoginData.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False"))
 
 
             {
                 try
                 {
                     connect.Open();
-                    String checkEmail = "SELECT * FROM admin WHERE email = @Email";
+                    String checkEmail = "SELECT * FROM users WHERE email = @Email";
                     //admin is the name of table created
 
                     using (SqlCommand checkUser = new SqlCommand(checkEmail, connect))
@@ -127,7 +127,7 @@ namespace TogetherCulture1
                     }
 
                     {
-                        string insertData = "INSERT INTO admin (email, passwrd, profile_created) VALUES(@email, @passwrd , @date)";
+                        string insertData = "INSERT INTO users (email, passwrd, profile_created) VALUES(@email, @passwrd , @date)";
 
 
                         using (SqlCommand cmd = new SqlCommand(insertData, connect))
