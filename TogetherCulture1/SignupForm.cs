@@ -11,7 +11,9 @@ using System.Data;
 using System.Data.SqlClient;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using System.Runtime.Remoting.Contexts;
-
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
+using System.Text.RegularExpressions;
+//// FORM BY STUDENT ID 2243328 ////
 namespace TogetherCulture1
 {
     public partial class SignupForm : Form
@@ -43,20 +45,20 @@ namespace TogetherCulture1
 
         private void gotoLoginButton_Click(object sender, EventArgs e)
         {
-            LoginForm lForm = new LoginForm();
-            lForm.Show();
-            this.Hide();
+            LoginForm lForm = new LoginForm(); // Create an instance of LoginForm.
+            lForm.Show(); // Display the login form.
+            this.Hide(); // Hide the current sign-up form.
         }
 
         private void create_showpass_CheckedChanged(object sender, EventArgs e)
         {
             if (create_showpass.Checked)
             {
-                create_passField.PasswordChar = '\0';
+                create_passField.PasswordChar = '\0'; // If checkbox is checked, show password.
             }
             else
             {
-                create_passField.PasswordChar = '*';
+                create_passField.PasswordChar = '*'; // Otherwise, Hide the password.
             }
         }
 
@@ -64,17 +66,19 @@ namespace TogetherCulture1
         {
             if (confirm_showpass.Checked)
             {
-                confirm_passField.PasswordChar = '\0';
+                confirm_passField.PasswordChar = '\0'; // If checkbox is checked, show password.
             }
             else
             {
-                confirm_passField.PasswordChar = '*';
+                confirm_passField.PasswordChar = '*'; // Otherwise, hide the password.
             }
         }
 
         private void SignupButton_Click(object sender, EventArgs e)
         {
             if(signup_emailField.Text == "" || create_passField.Text == "" || confirm_passField.Text == "")
+                //Validate that all required fields are filled.
+
             {
                 MessageBox.Show("Please fill all the fields", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -83,33 +87,33 @@ namespace TogetherCulture1
             string password = create_passField.Text;
             string confirmPassword = confirm_passField.Text;
 
-            if (!email.Contains("@") || !email.EndsWith(".com"))
+            if (!email.Contains("@") || !email.EndsWith(".com")) // Validate email format.
             {
                 MessageBox.Show("Invalid email format. Please enter a valid email address.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (password.Length < 6)
+            if (password.Length < 6) // Ensure password is at least 6 characters long.
             {
                 MessageBox.Show("Password must be at least 6 characters.", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            if (password != confirmPassword)
+            if (password != confirmPassword) //Check if password and confirm password fields match.
             {
                 MessageBox.Show("Passwords do not match.", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             using (SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Lenovo\Documents\LoginData.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=False"))
-
+            // Connect to the database to validate and insert user information.
 
             {
                 try
                 {
                     connect.Open();
-                    String checkEmail = "SELECT * FROM users WHERE email = @Email";
-                    //admin is the name of table created
+                    String checkEmail = "SELECT * FROM users WHERE email = @Email"; // Check if the email already exists in the database.
+                    //'users' is the name of table created
 
                     using (SqlCommand checkUser = new SqlCommand(checkEmail, connect))
 
@@ -121,6 +125,7 @@ namespace TogetherCulture1
 
                         if (table.Rows.Count > 0)
                         {
+                            // Display error if the email already exists.
                             MessageBox.Show(signup_emailField.Text + " already exist", "error message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
@@ -128,17 +133,18 @@ namespace TogetherCulture1
 
                     {
                         string insertData = "INSERT INTO users (email, passwrd, profile_created) VALUES(@email, @passwrd , @date)";
+                        // Insert new user information into the database.
 
 
                         using (SqlCommand cmd = new SqlCommand(insertData, connect))
                         {
-                            DateTime date = DateTime.Today;
+                            DateTime date = DateTime.Today; // Get the current date.
 
                             cmd.Parameters.AddWithValue("@email", signup_emailField.Text.Trim());
                             cmd.Parameters.AddWithValue("@passwrd", create_passField.Text.Trim());
                             cmd.Parameters.AddWithValue("@date", date);
 
-                            cmd.ExecuteNonQuery();
+                            cmd.ExecuteNonQuery(); // Execute the insert command.
 
                             MessageBox.Show("Successfully Created", " Information Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -159,11 +165,13 @@ namespace TogetherCulture1
                 }
                 catch (Exception ex)
                 {
+
                     MessageBox.Show("Error Connecting : " + ex, "error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // Handle exceptions and display error message.
                 }
                 finally
                 {
-                    connect.Close();
+                    connect.Close(); // Ensure the database connection is closed.
                 }
             }
                     
@@ -174,22 +182,22 @@ namespace TogetherCulture1
            
         
 
-        private void gotoLoginButton_MouseEnter(object sender, EventArgs e)
+        private void gotoLoginButton_MouseEnter(object sender, EventArgs e) // Change "Go to Login" button color to gray when mouse hovers over it.
         {
             gotoLoginButton.ForeColor = Color.Gray;
         }
 
-        private void gotoLoginButton_MouseLeave(object sender, EventArgs e)
+        private void gotoLoginButton_MouseLeave(object sender, EventArgs e) // Revert "Go to Login" button color to black when mouse leaves.
         {
             gotoLoginButton.ForeColor = Color.Black;
         }
 
-        private void signup_closeButton_MouseEnter(object sender, EventArgs e)
+        private void signup_closeButton_MouseEnter(object sender, EventArgs e) // Change close button color to gray when mouse hovers over it.
         {
             signup_closeButton.ForeColor = Color.Gray;
         }
 
-        private void signup_closeButton_MouseLeave(object sender, EventArgs e)
+        private void signup_closeButton_MouseLeave(object sender, EventArgs e) // Revert close button color to black when mouse leaves.
         {
             signup_closeButton.ForeColor = Color.Black;
         }
@@ -198,7 +206,7 @@ namespace TogetherCulture1
         {
 
         }
-        Point lastpoint;
+        Point lastpoint; // Allow dragging the form by holding the mouse button on the panel.
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -208,7 +216,7 @@ namespace TogetherCulture1
             }
         }
 
-        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        private void panel1_MouseDown(object sender, MouseEventArgs e) // Save the last point when the mouse is pressed on the panel.
         {
             lastpoint = new Point(e.X, e.Y);
         }
